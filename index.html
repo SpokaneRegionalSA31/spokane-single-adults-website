@@ -3,53 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Events, connection, activities, and service for single adults 31+ across Spokane and nearby communities.">
-  <meta property="og:title" content="Spokane Regional Single Adults">
-  <meta property="og:description" content="Connection, activities, and service for single adults 31+.">
+  <meta name="description" content="Events, connection, activities, and service for Spokane Singles 31+ across Spokane and nearby communities.">
+  <meta property="og:title" content="Spokane Singles 31+">
+  <meta property="og:description" content="Faith-centered activities, firesides, service, and connection for single adults 31+.">
   <meta property="og:image" content="assets/og.png">
-  <title>Spokane Regional Single Adults</title>
+  <title>Spokane Singles 31+</title>
   <link rel="icon" href="assets/spokane-regional-compass.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <nav class="nav">
-  <a class="brand" href="#top"><img class="compass" src="assets/spokane-regional-compass.png" alt="Spokane Regional Single Adults compass"><span>Spokane Regional<br><b>Single Adults 31+</b></span></a>
+  <a class="brand" href="#top"><img class="compass" src="assets/spokane-regional-compass.png" alt="Spokane Singles 31+ compass"><span>Spokane<br><b>Singles 31+</b></span></a>
   <div class="navLinks"><a href="#events">Events</a><a href="#about">New here?</a><a href="#submit">Submit an event</a></div>
 </nav>
 <header class="hero" id="top">
   <div class="heroContent">
-    <p class="eyebrow">SPOKANE REGIONAL SINGLE ADULTS 31+</p>
+    <p class="eyebrow">SPOKANE SINGLES 31+</p>
     <h1>Spokane singles,<br>there’s a place for you <em>here.</em></h1>
-    <p class="heroCopy">A gathering place for Spokane-area single adults 31+ to find faith-centered activities, firesides, service, and connection—with selected events from CDA and nearby communities also shared here.</p>
+    <p class="heroCopy">A gathering place for Spokane-area single adults 31+ to find faith-centered activities, firesides, service, and connection—with clearly labeled stake-sponsored, CDA, conference, and out-of-area events also shared here.</p>
     <div class="heroActions"><a class="button gold" href="#events">Find an event <span>↓</span></a><a class="textLink" href="#about">I’m new here <span>→</span></a></div>
   </div>
-  <div class="nextCard" id="next-card"><p>UP NEXT</p><div><h2>Loading upcoming events…</h2><p>Getting the latest approved flyers.</p></div></div>
+  <div class="nextCard" id="next-card"><p>UP NEXT</p><div><h2>Loading upcoming events…</h2><p>Getting the latest approved event information.</p></div></div>
 </header>
-<section class="monthlyFlyer hidden" id="monthly-flyer" aria-labelledby="monthly-flyer-title">
-  <div><p class="eyebrow green">MONTH AT A GLANCE</p><h2 id="monthly-flyer-title">Flyer of Flyers</h2><p>Save or share this one flyer for a quick look at what’s coming. Complete details and updates remain in the event list below.</p><a class="button dark" id="monthly-flyer-link" target="_blank" rel="noreferrer">Open the full flyer ↗</a></div>
-  <a class="monthlyFlyerImage" id="monthly-flyer-image-link" target="_blank" rel="noreferrer"><img id="monthly-flyer-image" alt="Monthly Flyer of Flyers"></a>
+
+<section class="monthlyFlyer hidden" id="current-monthly-flyer" aria-labelledby="current-monthly-flyer-title">
+  <div><p class="eyebrow green">THIS MONTH AT A GLANCE</p><h2 id="current-monthly-flyer-title">This Month</h2><p>Save or share this one flyer for a quick look at what’s happening this month. Complete and current event details remain in the event list below.</p><a class="button dark" id="current-monthly-flyer-link" target="_blank" rel="noreferrer">Open the full flyer ↗</a></div>
+  <a class="monthlyFlyerImage" id="current-monthly-flyer-image-link" target="_blank" rel="noreferrer"><img id="current-monthly-flyer-image" alt="Current monthly Flyer of Flyers"></a>
 </section>
+
+<section class="monthlyFlyer nextMonth hidden" id="next-monthly-flyer" aria-labelledby="next-monthly-flyer-title">
+  <div><p class="eyebrow green">COMING NEXT MONTH</p><h2 id="next-monthly-flyer-title">Coming Next Month</h2><p>Planning ahead? Here’s the next monthly overview. Check the event list for the most current details, addresses, and updates.</p><a class="button dark" id="next-monthly-flyer-link" target="_blank" rel="noreferrer">Open the full flyer ↗</a></div>
+  <a class="monthlyFlyerImage" id="next-monthly-flyer-image-link" target="_blank" rel="noreferrer"><img id="next-monthly-flyer-image" alt="Next monthly Flyer of Flyers"></a>
+</section>
+
 <section class="eventsSection" id="events">
-  <div class="sectionHead"><div><p class="eyebrow green">WHAT’S HAPPENING</p><h2>Upcoming events</h2></div><div class="sectionIntro"><p>Regional events are shown first. Use the filters to find stake-sponsored and nearby gatherings.</p><a id="calendar-link" target="_blank" rel="noreferrer">View the full regional calendar ↗</a></div></div>
+  <div class="sectionHead"><div><p class="eyebrow green">WHAT’S HAPPENING</p><h2>Upcoming events</h2></div><div class="sectionIntro"><p>Events are grouped by sponsor or area so you can quickly tell what is Spokane Regional, stake-sponsored, CDA, conference, or out-of-area.</p><a id="calendar-link" target="_blank" rel="noreferrer">View the full regional calendar ↗</a></div></div>
   <div class="filters">
     <label class="search"><span>⌕</span><input id="search" placeholder="Search events" aria-label="Search events"></label>
     <label><span>Event type</span><select id="type-filter"><option>All events</option></select></label>
     <label><span>Area / region</span><select id="area-filter"><option>All areas</option></select></label>
     <button class="clear hidden" id="clear-filters">Clear filters</button>
   </div>
-  <div class="results"><span id="results-count">Loading upcoming events…</span><span class="legend"><i></i> Regional event</span></div>
-  <div class="eventList" id="event-list"><div class="empty"><strong>Loading upcoming events…</strong><p>Getting the latest approved flyers.</p></div></div>
+  <div class="results"><span id="results-count">Loading upcoming events…</span><span class="legend"><i></i> Spokane Regional Event</span></div>
+  <div class="eventList" id="event-list"><div class="empty"><strong>Loading upcoming events…</strong><p>Getting the latest approved event information.</p></div></div>
 </section>
-<section class="welcome" id="about"><div><p class="eyebrow">NEW HERE?</p><h2>You don’t have to know anyone<br>to come belong.</h2></div><div><p>Whether you attend church every week, haven’t been in a long time, or are simply looking for good people and meaningful connection—you’re welcome. Come for an activity that sounds comfortable. There’s no registration unless an event specifically says so.</p><a class="button cream" href="#events">See what’s coming up →</a></div></section>
-<section class="submit" id="submit"><div><p class="eyebrow green">HELP KEEP EVERYONE CONNECTED</p><h2>Have an event to share?</h2><p>Submit the details and flyer once. Approved events can be added to this hub and the regional calendar without sending the same information to multiple people.</p></div><div class="submitActions"><a class="button dark" id="form-link" target="_blank" rel="noreferrer">Submit an event ↗</a><span>Regional · Stake-sponsored · CDA partner · Conference · Out-of-area</span></div></section>
+
+<section class="welcome" id="about"><div><p class="eyebrow">NEW HERE?</p><h2>You don’t have to know anyone<br>to come belong.</h2></div><div><p>Whether you attend church every week, haven’t been in a long time, or are simply looking for good people and meaningful connection—you’re welcome. Come for an activity that sounds comfortable. There’s no registration unless an event specifically says so.</p><p class="programNote"><strong>Spokane Singles 31+</strong> serves the Church’s Single Adult 31+ community and is separate from the Young Single Adult 18–35 program.</p><a class="button cream" href="#events">See what’s coming up →</a></div></section>
+
+<section class="submit" id="submit"><div><p class="eyebrow green">HELP KEEP EVERYONE CONNECTED</p><h2>Have an event to share?</h2><p>Submit the details and flyer once. Approved events can be added to this hub and the regional calendar without sending the same information to multiple people.</p></div><div class="submitActions"><a class="button dark" id="form-link" target="_blank" rel="noreferrer">Submit an event ↗</a><span>Spokane Regional · Stake-Sponsored · CDA · Regional Conference · Out-of-Area</span></div></section>
+
 <section class="social" aria-labelledby="social-title">
-  <div><p class="eyebrow green">STAY CONNECTED</p><h2 id="social-title">Follow Spokane Singles</h2><p>Follow along for event reminders, new flyers, and updates from Spokane Regional Single Adults 31+.</p></div>
+  <div><p class="eyebrow green">STAY CONNECTED</p><h2 id="social-title">Follow Spokane Singles 31+</h2><p>Follow along for event reminders, new flyers, and updates for the Spokane Singles 31+ community.</p></div>
   <div class="socialActions">
-    <a class="socialButton facebook" href="https://www.facebook.com/profile.php?id=61593336172171" target="_blank" rel="noreferrer" aria-label="Follow Spokane Single Adults 31+ on Facebook"><span class="socialIcon">f</span><span><small>FOLLOW US ON</small>Facebook</span><b>↗</b></a>
-    <a class="socialButton instagram" href="https://www.instagram.com/spokanesa31/" target="_blank" rel="noreferrer" aria-label="Follow Spokane Single Adults 31+ on Instagram"><span class="socialIcon">◎</span><span><small>FOLLOW US ON</small>Instagram</span><b>↗</b></a>
+    <a class="socialButton facebook" href="https://www.facebook.com/profile.php?id=61593336172171" target="_blank" rel="noreferrer" aria-label="Follow Spokane Singles 31+ on Facebook"><span class="socialIcon">f</span><span><small>FOLLOW US ON</small>Facebook</span><b>↗</b></a>
+    <a class="socialButton instagram" href="https://www.instagram.com/spokanesa31/" target="_blank" rel="noreferrer" aria-label="Follow Spokane Singles 31+ on Instagram"><span class="socialIcon">◎</span><span><small>FOLLOW US ON</small>Instagram</span><b>↗</b></a>
   </div>
 </section>
-<footer><div class="brand"><img class="compass" src="assets/spokane-regional-compass.png" alt="Spokane Regional Single Adults compass"><span>Spokane Regional<br><b>Single Adults 31+</b></span></div><p>A community of single adults of The Church of Jesus Christ of Latter-day Saints.</p><p>Connecting single adults across the Spokane region</p></footer>
+
+<footer><div class="brand"><img class="compass" src="assets/spokane-regional-compass.png" alt="Spokane Singles 31+ compass"><span>Spokane<br><b>Singles 31+</b></span></div><p>A community of single adults of The Church of Jesus Christ of Latter-day Saints.</p><p>Connecting single adults age 31+ across the Spokane region</p></footer>
 <script src="app.js"></script>
 </body>
 </html>
