@@ -10,11 +10,21 @@ function esc(value){return String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;'
 function safeUrl(value){try{const u=new URL(value);return /^https?:$/.test(u.protocol)?u.href:'';}catch{return '';}}
 function directionsUrl(location){return location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`:'';}
 function text(v){return String(v||'').trim();}
+function canonicalArea(value){
+  const original=text(value);
+  const key=original.toLowerCase().replace(/\s+/g,' ');
+  const aliases={
+    'north spokane':'Spokane North Stake',
+    'spokane north':'Spokane North Stake',
+    'spokane north stake':'Spokane North Stake'
+  };
+  return aliases[key]||original;
+}
 
 function classify(item){
   const type=text(item.type).toLowerCase();
-  const area=text(item.area).toLowerCase();
-  const source=text(item.sourceArea).toLowerCase();
+  const area=canonicalArea(item.area).toLowerCase();
+  const source=canonicalArea(item.sourceArea).toLowerCase();
   const combined=`${type} ${area} ${source}`;
   if(/regional conference/.test(combined)||(/conference/.test(type)&&/spokane/.test(combined))) return 'conference';
   if(/cda|coeur d.?alene/.test(combined)) return 'cda';
@@ -28,8 +38,9 @@ function toEvent(item,index){
   const dateValue=Number(item.dateValue)||0;
   const date=new Date(dateValue);
   const valid=dateValue>0&&!Number.isNaN(date.getTime());
-  const area=item.area||item.sourceArea||'Spokane Area';
-  const category=classify(item);
+  const area=canonicalArea(item.area||item.sourceArea||'Spokane Area');
+  const sourceArea=canonicalArea(item.sourceArea||'');
+  const category=classify({...item,area,sourceArea});
   return {
     id:index+1,
     title:item.eventName||'Untitled event',
@@ -49,7 +60,7 @@ function toEvent(item,index){
     flyerLink:safeUrl(item.flyerLink),
     calendarUrl:safeUrl(item.calendarUrl),
     directionsUrl:directionsUrl(item.location),
-    sourceArea:item.sourceArea||'',
+    sourceArea,
     category
   };
 }
