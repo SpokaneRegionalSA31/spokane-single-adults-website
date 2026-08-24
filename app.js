@@ -6,7 +6,7 @@ const $=id=>document.getElementById(id);
 $('form-link').href=FORM_URL;
 $('calendar-link').href=CALENDAR_URL;
 
-function esc(value){return String(value??'').replace(/[&<>'\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));}
+function esc(value){return String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
 function safeUrl(value){try{const u=new URL(value);return /^https?:$/.test(u.protocol)?u.href:'';}catch{return '';}}
 function directionsUrl(location){return location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`:'';}
 function text(v){return String(v||'').trim();}
