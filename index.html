@@ -15,16 +15,23 @@
     #top{scroll-margin-top:82px}
     #about{scroll-margin-top:112px}
     .detailLink{text-decoration:underline;font-weight:700;color:#33594f;overflow-wrap:anywhere}
+    .contactSection{padding:72px 7vw;background:#eef1ed;border-top:1px solid #dddcd3;display:flex;align-items:center;justify-content:space-between;gap:50px}
+    .contactSection>div{max-width:760px}
+    .contactSection h2{font:400 clamp(36px,4.5vw,56px)/1.05 Georgia,serif;margin:0 0 16px}
+    .contactSection p:not(.eyebrow){margin:0;color:#66746f;line-height:1.7}
+    .contactSection .button{flex:0 0 auto}
     @media(max-width:850px){
       #top{scroll-margin-top:70px}
       #about{scroll-margin-top:100px}
+      .contactSection{align-items:flex-start;flex-direction:column}
+      .contactSection .button{width:100%}
     }
   </style>
 </head>
 <body>
 <nav class="nav">
   <a class="brand" href="#top"><img class="compass" src="assets/spokane-regional-compass.png" alt="Spokane Singles 31+ compass"><span>Spokane<br><b>Singles 31+</b></span></a>
-  <div class="navLinks"><a href="#events">Events</a><a href="#about">New here?</a><a href="#submit">Submit an event</a></div>
+  <div class="navLinks"><a href="#events">Events</a><a href="#about">New here?</a><a href="#submit">Submit an event</a><a href="#contact">Contact</a></div>
 </nav>
 <header class="hero" id="top">
   <div class="heroContent">
@@ -67,6 +74,11 @@
 <section class="welcome" id="about"><div><p class="eyebrow">NEW HERE?</p><h2>You don’t have to know anyone<br>to come belong.</h2></div><div><p>Whether you attend church every week, haven’t been in a long time, or are simply looking for good people and meaningful connection—you’re welcome. Come for an activity that sounds comfortable. There’s no registration unless an event specifically says so.</p><p class="programNote"><strong>Spokane Singles 31+</strong> serves the Church’s Single Adult 31+ community and is separate from the Young Single Adult 18–35 program.</p><a class="button cream" href="#events">See what’s coming up →</a></div></section>
 
 <section class="submit" id="submit"><div><p class="eyebrow green">HELP KEEP EVERYONE CONNECTED</p><h2>Have an event to share?</h2><p>Submit the details and flyer once. Approved events can be added to this hub and the regional calendar without sending the same information to multiple people.</p></div><div class="submitActions"><a class="button dark" id="form-link" target="_blank" rel="noreferrer">Submit an event ↗</a><span>Spokane Regional · Stake-Sponsored · CDA · Regional Conference · Out-of-Area</span></div></section>
+
+<section class="contactSection" id="contact" aria-labelledby="contact-title">
+  <div><p class="eyebrow green">QUESTIONS?</p><h2 id="contact-title">Contact the Spokane Singles 31+ committee</h2><p>Questions about a Spokane event or the regional 31+ Single Adult program? Email the committee and your message can reach the people coordinating Spokane Singles 31+.</p></div>
+  <a class="button dark" href="mailto:spokane-sa-committee@googlegroups.com">Email the Spokane Committee</a>
+</section>
 
 <section class="social" aria-labelledby="social-title">
   <div><p class="eyebrow green">STAY CONNECTED</p><h2 id="social-title">Follow Spokane Singles 31+</h2><p>Follow along for event reminders, new flyers, and updates for the Spokane Singles 31+ community.</p></div>
