@@ -64,7 +64,7 @@ a{color:inherit;text-decoration:none}
 .eventGroupHead .eyebrow{margin-bottom:8px}
 .eventGroupHead h3{font:400 34px/1.1 Georgia,serif;margin:0}
 .eventGroupHead>p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
-.eventCard{display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:28px;padding:28px 18px;border-bottom:1px solid var(--line);transition:.2s}
+.eventCard{scroll-margin-top:105px;display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:28px;padding:28px 18px;border-bottom:1px solid var(--line);transition:.2s}
 .eventCard:hover{background:white}
 .eventCard.featured{border-left:3px solid var(--gold)}
 .dateTile{width:72px;height:82px;border:1px solid #d5d7d0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:white}
@@ -85,6 +85,7 @@ a{color:inherit;text-decoration:none}
 .cardActions a:last-child{background:var(--pine);color:white;border-color:var(--pine)}
 .cardActions a.secondaryAction{background:white;color:#33594f;border-color:#cad0cc}
 .empty{text-align:center;padding:60px 20px;color:#5d6b67}
+#about{scroll-margin-top:30px}
 .welcome{background:var(--pine);color:white;padding:85px 7vw;display:grid;grid-template-columns:1fr 1fr;gap:10vw}
 .welcome p:not(.eyebrow){line-height:1.8;color:#d6e3df;margin:5px 0 28px}
 .welcome .programNote{padding-top:18px;border-top:1px solid #ffffff2b;font-size:14px}
@@ -147,7 +148,7 @@ footer>p:last-child{text-align:left}
 .filters .search{grid-column:auto}
 .eventGroup{margin-top:42px}
 .eventGroupHead h3{font-size:29px}
-.eventCard{grid-template-columns:58px minmax(0,1fr);gap:16px;padding:24px 4px}
+.eventCard{scroll-margin-top:90px;grid-template-columns:58px minmax(0,1fr);gap:16px;padding:24px 4px}
 .dateTile{width:58px;height:70px}
 .dateTile strong{font-size:31px}
 .eventMain h3{font-size:23px}
