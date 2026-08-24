@@ -43,8 +43,12 @@ a{color:inherit;text-decoration:none}
 .sectionHead h2,.welcome h2,.submit h2{font:400 clamp(40px,5vw,64px)/1.05 Georgia,serif;margin:0}
 .sectionIntro{max-width:470px}
 .sectionIntro p{line-height:1.6;color:var(--muted);font-size:14px;margin:0}
-.sectionIntro a{display:inline-block;margin-top:10px;color:#284b63;font-size:12px;font-weight:800;border-bottom:1px solid #7d9d8c}
-.filters{display:flex;gap:12px;margin:48px 0 20px;align-items:end}
+.calendarSubscribe{margin:34px 0 10px;padding:22px 24px;background:var(--cream);border:1px solid #e1ddd2;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.calendarSubscribeCopy{max-width:760px}
+.calendarSubscribeCopy strong{display:block;font:400 23px/1.2 Georgia,serif;margin-bottom:6px;color:var(--ink)}
+.calendarSubscribeCopy p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+.calendarSubscribe .button{flex:0 0 auto;text-align:center}
+.filters{display:flex;gap:12px;margin:32px 0 20px;align-items:end}
 .filters label{display:flex;flex-direction:column;gap:8px}
 .filters label>span{font-size:10px;text-transform:uppercase;letter-spacing:.14em;font-weight:bold;color:#6e7a76}
 .filters input,.filters select{height:48px;border:1px solid #d7d7cf;background:white;padding:0 15px;color:var(--ink);font-size:13px;border-radius:2px;min-width:180px}
@@ -121,6 +125,8 @@ footer>p:last-child{text-align:right}
 .monthlyFlyer{grid-template-columns:1fr;padding:70px 7vw;gap:40px}
 .monthlyFlyerImage{max-width:420px}
 .sectionHead,.submit,.social{align-items:start;flex-direction:column}
+.calendarSubscribe{align-items:flex-start;flex-direction:column}
+.calendarSubscribe .button{width:100%}
 .eventGroupHead{grid-template-columns:1fr;gap:10px}
 .filters{display:grid;grid-template-columns:1fr 1fr}
 .filters .search{grid-column:1/-1}
@@ -135,6 +141,8 @@ footer>p:last-child{text-align:left}
 .heroActions{align-items:flex-start;flex-direction:column;gap:10px}
 .eventsSection{padding:70px 4vw}
 .monthlyFlyer{padding:60px 7vw}
+.calendarSubscribe{padding:20px;margin-top:28px}
+.calendarSubscribeCopy strong{font-size:21px}
 .filters{grid-template-columns:1fr}
 .filters .search{grid-column:auto}
 .eventGroup{margin-top:42px}
@@ -144,7 +152,7 @@ footer>p:last-child{text-align:left}
 .dateTile strong{font-size:31px}
 .eventMain h3{font-size:23px}
 .cardActions{grid-column:1/-1;margin-left:74px;display:grid;grid-template-columns:1fr 1fr;width:calc(100% - 74px)}
-.cardActions button,.cardActions a{text-align:center;width:100%;padding:12px 8px}
+.cardActions button,.cardActions a{text-align:center;width:100%;padding:12px 8px;white-space:normal}
 .legend{display:none}
 .welcome,.submit{padding:70px 7vw}
 .social{padding:60px 7vw}
