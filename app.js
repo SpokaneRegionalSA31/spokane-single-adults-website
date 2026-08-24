@@ -38,8 +38,8 @@ function classify(item){
   const area=canonicalArea(item.area).toLowerCase();
   const source=canonicalArea(item.sourceArea).toLowerCase();
   const combined=`${type} ${area} ${source}`;
+  if(/cda|coeur d.?alene/.test(combined)) return 'out';
   if(/regional conference/.test(combined)||(/conference/.test(type)&&/spokane/.test(combined))) return 'conference';
-  if(/cda|coeur d.?alene/.test(combined)) return 'cda';
   if(/out.?of.?area|travel required/.test(combined)||(/conference/.test(type)&&!/spokane/.test(combined))) return 'out';
   if(/spokane region|regional activity|regional fireside/.test(combined)) return 'regional';
   if(/stake.?sponsored|stake sponsored/.test(combined)||/stake/.test(area)||/stake/.test(source)) return 'stake';
@@ -82,7 +82,6 @@ function displayCategory(e){
   if(e.category==='conference') return 'Regional Conference';
   if(e.category==='regional') return 'Spokane Regional Event';
   if(e.category==='stake') return 'Stake-Sponsored';
-  if(e.category==='cda') return 'CDA';
   return 'Out-of-Area';
 }
 
@@ -118,8 +117,7 @@ const sectionMeta={
   conference:['Regional Conference','Regional conference events for Spokane Singles 31+.'],
   regional:['Spokane Regional Activities & Firesides','Events planned for the Spokane regional 31+ Single Adult community.'],
   stake:['Stake-Sponsored Activities','Activities sponsored by individual stakes and shared with the wider 31+ community.'],
-  cda:['CDA Coordinating Council Activities','CDA-area activities shared as partner events.'],
-  out:['Nearby & Out-of-Area Events','Additional events that may require travel outside the Spokane area.']
+  out:['Nearby & Out-of-Area Events','Additional events shared from outside the Spokane regional program and events that may require travel.']
 };
 
 function render(){
@@ -133,7 +131,7 @@ function render(){
   if(!filtered.length){
     $('event-list').innerHTML='<div class="empty"><strong>No events match those filters.</strong><p>Try clearing one filter or searching another word.</p></div>';
   } else {
-    const order=['conference','regional','stake','cda','out'];
+    const order=['conference','regional','stake','out'];
     $('event-list').innerHTML=order.map(key=>{
       const group=filtered.filter(e=>e.category===key);
       if(!group.length) return '';
