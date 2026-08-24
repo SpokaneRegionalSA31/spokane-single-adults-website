@@ -6,7 +6,7 @@ const $=id=>document.getElementById(id);
 $('form-link').href=FORM_URL;
 $('calendar-link').href=CALENDAR_URL;
 
-function esc(value){return String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function esc(value){return String(value??'').replace(/[&<>'\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));}
 function safeUrl(value){try{const u=new URL(value);return /^https?:$/.test(u.protocol)?u.href:'';}catch{return '';}}
 function directionsUrl(location){return location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`:'';}
 function text(v){return String(v||'').trim();}
@@ -17,6 +17,20 @@ function canonicalArea(value){
   const words=new Set(key.split(' ').filter(Boolean));
   if(words.has('spokane')&&words.has('north')) return 'Spokane North Stake';
   return original;
+}
+function linkify(value){
+  const parts=String(value||'').split(/(https?:\/\/[^\s<>"']+)/gi);
+  return parts.map(part=>{
+    if(!/^https?:\/\//i.test(part)) return esc(part);
+    let url=part;
+    let trailing='';
+    while(url&&/[),.;!?]$/.test(url)){
+      trailing=url.slice(-1)+trailing;
+      url=url.slice(0,-1);
+    }
+    const href=safeUrl(url);
+    return href?`<a class="detailLink" href="${esc(href)}" target="_blank" rel="noreferrer">${esc(url)}</a>${esc(trailing)}`:esc(part);
+  }).join('');
 }
 
 function classify(item){
@@ -86,9 +100,9 @@ function cardHtml(e){
       <p class="meta">${esc(e.time)} <b>·</b> ${esc(e.location)}</p>
       <div class="hosted">Hosted by: <strong>${esc(e.area)}</strong></div>
       <div class="eventDetails hidden" id="details-${e.id}">
-        <p>${esc(e.description)}</p>
+        <p>${linkify(e.description)}</p>
         ${e.children?`<p><strong>Children welcome:</strong> ${esc(e.children)}</p>`:''}
-        ${e.bring?`<p><strong>What to bring:</strong> ${esc(e.bring)}</p>`:''}
+        ${e.bring?`<p><strong>What to bring:</strong> ${linkify(e.bring)}</p>`:''}
       </div>
     </div>
     <div class="cardActions">
