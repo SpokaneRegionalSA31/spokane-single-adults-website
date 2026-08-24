@@ -6,10 +6,11 @@ const $=id=>document.getElementById(id);
 $('form-link').href=FORM_URL;
 $('calendar-link').href=CALENDAR_URL;
 
-function esc(value){return String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function esc(value){return String(value??'').replace(/[&<>'\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));}
 function safeUrl(value){try{const u=new URL(value);return /^https?:$/.test(u.protocol)?u.href:'';}catch{return '';}}
 function directionsUrl(location){return location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`:'';}
 function text(v){return String(v||'').trim();}
+function canonicalType(value){return text(value).normalize('NFKC').replace(/\s+/g,' ');}
 function canonicalArea(value){
   const original=text(value);
   const key=original.normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
@@ -48,7 +49,7 @@ function toEvent(item,index){
     year:valid?new Intl.DateTimeFormat('en-US',{year:'numeric',timeZone:'America/Los_Angeles'}).format(date):'',
     time:item.time||'Time coming soon',
     location:item.location||'Location coming soon',
-    type:item.type||'Event',
+    type:canonicalType(item.type)||'Event',
     area,
     description:item.description||'Open the flyer for complete event details.',
     featured:Boolean(item.featured)||category==='regional'||category==='conference',
