@@ -94,7 +94,7 @@ function cardHtml(e){
       <button data-id="${e.id}">Details</button>
       ${e.flyerLink?`<a class="secondaryAction" href="${e.flyerLink}" target="_blank" rel="noreferrer">View Flyer</a>`:''}
       ${e.directionsUrl?`<a class="secondaryAction" href="${e.directionsUrl}" target="_blank" rel="noreferrer">Directions</a>`:''}
-      ${e.calendarUrl?`<a href="${e.calendarUrl}" target="_blank" rel="noreferrer">＋ Calendar</a>`:''}
+      ${e.calendarUrl?`<a href="${e.calendarUrl}" target="_blank" rel="noreferrer">Add This Event</a>`:''}
     </div>
   </article>`;
 }
