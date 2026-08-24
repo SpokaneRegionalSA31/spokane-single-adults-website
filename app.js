@@ -12,13 +12,10 @@ function directionsUrl(location){return location?`https://www.google.com/maps/se
 function text(v){return String(v||'').trim();}
 function canonicalArea(value){
   const original=text(value);
-  const key=original.toLowerCase().replace(/\s+/g,' ');
-  const aliases={
-    'north spokane':'Spokane North Stake',
-    'spokane north':'Spokane North Stake',
-    'spokane north stake':'Spokane North Stake'
-  };
-  return aliases[key]||original;
+  const key=original.normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const words=new Set(key.split(' ').filter(Boolean));
+  if(words.has('spokane')&&words.has('north')) return 'Spokane North Stake';
+  return original;
 }
 
 function classify(item){
