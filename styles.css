@@ -84,7 +84,15 @@ a{color:inherit;text-decoration:none}
   white-space:pre-wrap;
   overflow-wrap:anywhere;
 }
-.cardActions{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap;max-width:390px}
+.cardActions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  max-width:390px;
+  align-self:end;
+}
 .cardActions button,.cardActions a{border:1px solid #cad0cc;background:white;padding:11px 13px;font-size:11px;font-weight:bold;color:#33594f;cursor:pointer;white-space:nowrap}
 .cardActions a:last-child{background:var(--pine);color:white;border-color:var(--pine)}
 .cardActions a.secondaryAction{background:white;color:#33594f;border-color:#cad0cc}
