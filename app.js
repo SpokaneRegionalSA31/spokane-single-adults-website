@@ -1,5 +1,5 @@
 const FEED_URL="https://script.google.com/macros/s/AKfycbydWsFlSeIE2kExls6H4miVySGRCE7JQn7MEWlOn97l_ciQQAKEqsAts5XiVbFottDD/exec";
-const FORM_URL="https://forms.gle/Tc67D7DiD8yyUrN97";
+const FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSesu0r8KRIXgcipw7jFkq1w2miHa_Us8ubMAiY1te27GRlsMg/viewform";
 const CALENDAR_URL="https://calendar.google.com/calendar/u/0?cid=OTJhYjFkZDIzYzJmYWNhODYyMGQ3MzE1MmQ2Njk1MDZkNDY4MTI3MzRiZWQzZGQyYjY0YmM1N2JmZDljYjdhZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t";
 let events=[];
 const $=id=>document.getElementById(id);
