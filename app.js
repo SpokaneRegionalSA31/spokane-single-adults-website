@@ -2,6 +2,7 @@ const FEED_URL="https://script.google.com/macros/s/AKfycbydWsFlSeIE2kExls6H4miVy
 const FORM_URL="/submit";
 const CALENDAR_URL="https://calendar.google.com/calendar/u/0?cid=OTJhYjFkZDIzYzJmYWNhODYyMGQ3MzE1MmQ2Njk1MDZkNDY4MTI3MzRiZWQzZGQyYjY0YmM1N2JmZDljYjdhZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t";
 let events=[];
+let recurringEvents=[];
 const $=id=>document.getElementById(id);
 $('form-link').href=FORM_URL;
 $('calendar-link').href=CALENDAR_URL;
@@ -77,6 +78,31 @@ function toEvent(item,index){
   };
 }
 
+function toRecurringEvent(item,index){
+  const area=canonicalArea(item.area||item.hostStake||item.sourceArea||'Spokane Area');
+  const sourceArea=canonicalArea(item.sourceArea||'');
+  const category=classify({...item,area,sourceArea});
+  const meetingUrl=safeUrl(item.meetingUrl);
+  const location=text(item.location)||text(item.meetingFormat)||'Location coming soon';
+  return {
+    id:`recurring-${index+1}`,
+    title:item.eventName||'Untitled recurring series',
+    recurrence:text(item.recurrence)||text(item.frequency)||'Recurring schedule',
+    time:text(item.time)||'Time coming soon',
+    location,
+    type:canonicalType(item.type)||'Standing Recurring Series / Ongoing Class',
+    area,
+    description:item.description||'Check the current series details before attending.',
+    meetingFormat:text(item.meetingFormat),
+    meetingUrl,
+    directionsUrl:meetingUrl?'':directionsUrl(location),
+    seriesStartDate:text(item.seriesStartDate),
+    seriesEndDate:text(item.seriesEndDate),
+    sourceArea,
+    category
+  };
+}
+
 function tag(textValue,cls=''){return textValue?`<span class="${cls}">${esc(textValue)}</span>`:'';}
 function displayCategory(e){
   if(e.category==='conference') return 'Regional Conference';
@@ -113,31 +139,81 @@ function cardHtml(e){
   </article>`;
 }
 
+function recurringCardHtml(e){
+  const schedule=[e.recurrence,e.time,e.location].filter(Boolean).join(' · ');
+  return `<article class="eventCard" id="event-${e.id}">
+    <div class="dateTile"><span>SERIES</span><strong>↻</strong></div>
+    <div class="eventMain">
+      <div class="tags">${tag(displayCategory(e),e.category==='out'?'travelTag':'')}${e.sourceArea&&e.sourceArea!==e.area?tag(e.sourceArea,'sourceTag'):''}${tag(e.type)}</div>
+      <h3>${esc(e.title)}</h3>
+      <p class="meta">${esc(schedule)}</p>
+      <div class="hosted">Hosted by: <strong>${esc(e.area)}</strong></div>
+      <div class="eventDetails hidden" id="details-${e.id}">
+        <p>${linkify(e.description)}</p>
+        ${e.seriesStartDate?`<p><strong>Series begins:</strong> ${esc(e.seriesStartDate)}</p>`:''}
+        ${e.seriesEndDate?`<p><strong>Series ends:</strong> ${esc(e.seriesEndDate)}</p>`:''}
+      </div>
+    </div>
+    <div class="cardActions">
+      <button data-id="${e.id}">Details</button>
+      ${e.meetingUrl?`<a href="${e.meetingUrl}" target="_blank" rel="noreferrer">Meeting Link</a>`:''}
+      ${e.directionsUrl?`<a href="${e.directionsUrl}" target="_blank" rel="noreferrer">Directions</a>`:''}
+    </div>
+  </article>`;
+}
+
 const sectionMeta={
   conference:['Regional Conference','Regional conference events for Spokane Singles 31+.'],
   regional:['Spokane Regional Activities & Firesides','Events planned for the Spokane regional 31+ Single Adult community.'],
   stake:['Stake-Sponsored Activities','Activities sponsored by individual stakes and shared with the wider 31+ community.'],
+  recurring:['Ongoing Classes & Recurring Events','Standing series that meet on a regular schedule. Current details below update from the canonical series record.'],
   out:['Nearby & Out-of-Area Events','Additional events shared from outside the Spokane regional program and events that may require travel.']
 };
+
+function matchesFilters(e,q,type,area){
+  return (type==='All events'||e.type===type)&&
+    (area==='All areas'||e.area===area)&&
+    `${e.title} ${e.location} ${e.description} ${e.area} ${e.type} ${e.recurrence||''} ${e.meetingFormat||''}`.toLowerCase().includes(q);
+}
 
 function render(){
   const q=$('search').value.toLowerCase();
   const type=$('type-filter').value;
   const area=$('area-filter').value;
-  const filtered=events.filter(e=>(type==='All events'||e.type===type)&&(area==='All areas'||e.area===area)&&`${e.title} ${e.location} ${e.description} ${e.area} ${e.type}`.toLowerCase().includes(q));
-  $('results-count').textContent=`${filtered.length} upcoming ${filtered.length===1?'event':'events'}`;
+  const filtered=events.filter(e=>matchesFilters(e,q,type,area));
+  const recurringFiltered=recurringEvents.filter(e=>matchesFilters(e,q,type,area));
+  const total=filtered.length+recurringFiltered.length;
+
+  $('results-count').textContent=recurringFiltered.length
+    ? `${filtered.length} upcoming · ${recurringFiltered.length} ongoing`
+    : `${filtered.length} upcoming ${filtered.length===1?'event':'events'}`;
   $('clear-filters').classList.toggle('hidden',type==='All events'&&area==='All areas'&&!q);
 
-  if(!filtered.length){
+  if(!total){
     $('event-list').innerHTML='<div class="empty"><strong>No events match those filters.</strong><p>Try clearing one filter or searching another word.</p></div>';
   } else {
-    const order=['conference','regional','stake','out'];
-    $('event-list').innerHTML=order.map(key=>{
+    const order=['conference','regional','stake'];
+    const normalSections=order.map(key=>{
       const group=filtered.filter(e=>e.category===key);
       if(!group.length) return '';
       const [title,desc]=sectionMeta[key];
       return `<section class="eventGroup"><div class="eventGroupHead"><div><p class="eyebrow green">${esc(title.toUpperCase())}</p><h3>${esc(title)}</h3></div><p>${esc(desc)}</p></div>${group.map(cardHtml).join('')}</section>`;
     }).join('');
+
+    let recurringSection='';
+    if(recurringFiltered.length){
+      const [title,desc]=sectionMeta.recurring;
+      recurringSection=`<section class="eventGroup"><div class="eventGroupHead"><div><p class="eyebrow green">${esc(title.toUpperCase())}</p><h3>${esc(title)}</h3></div><p>${esc(desc)}</p></div>${recurringFiltered.map(recurringCardHtml).join('')}</section>`;
+    }
+
+    const outGroup=filtered.filter(e=>e.category==='out');
+    let outSection='';
+    if(outGroup.length){
+      const [title,desc]=sectionMeta.out;
+      outSection=`<section class="eventGroup"><div class="eventGroupHead"><div><p class="eyebrow green">${esc(title.toUpperCase())}</p><h3>${esc(title)}</h3></div><p>${esc(desc)}</p></div>${outGroup.map(cardHtml).join('')}</section>`;
+    }
+
+    $('event-list').innerHTML=normalSections+recurringSection+outSection;
   }
 
   document.querySelectorAll('.cardActions button').forEach(button=>button.addEventListener('click',()=>{
@@ -174,8 +250,10 @@ function loadFeed(){
   window[callback]=payload=>{
     finished=true;
     events=(payload.events||[]).map(toEvent).filter(e=>e.dateValue>0).sort((a,b)=>a.dateValue-b.dateValue);
-    addOptions('type-filter',events.map(e=>e.type),'All events');
-    addOptions('area-filter',events.map(e=>e.area),'All areas');
+    recurringEvents=(payload.recurringEvents||[]).map(toRecurringEvent);
+    const allForFilters=[...events,...recurringEvents];
+    addOptions('type-filter',allForFilters.map(e=>e.type),'All events');
+    addOptions('area-filter',allForFilters.map(e=>e.area),'All areas');
     showFlyer(payload.currentMonthlyFlyer,'current');
     showFlyer(payload.nextMonthlyFlyer,'next');
     renderNext();
